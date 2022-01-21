@@ -21,8 +21,6 @@ public class FCMToken implements CustomEntity {
 
     private String userId;
 
-    private String token;
-
     @Override()
     public String getUuid() {
         return uuid;
@@ -46,14 +44,6 @@ public class FCMToken implements CustomEntity {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     @Override()
