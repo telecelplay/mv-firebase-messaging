@@ -28,7 +28,7 @@
             "id": "CE_FCMToken_token",
             "title": "FCMToken.token",
             "type": "string",
-            "maxLength": 100
+            "maxLength": 500
         }
     }
 }
