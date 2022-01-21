@@ -1,0 +1,9 @@
+{
+  "code" : "firebase-messaging",
+  "description" : "app/web notification using firebase messaging",
+  "license" : "GPL",
+  "currentVersion" : "0.1",
+  "isInDraft" : true,
+  "moduleDependencies" : [ ],
+  "moduleFiles" : [ ]
+}
