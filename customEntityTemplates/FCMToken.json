@@ -34,7 +34,7 @@
     "audited" : false,
     "persisted" : true,
     "filter" : true,
-    "unique" : false
+    "unique" : true
   }, {
     "code" : "token",
     "description" : "token",
