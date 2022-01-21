@@ -34,6 +34,7 @@ public class CloudMessaging extends Script {
 	private String userId;
 	private String title;
 	private String body;
+	private String result;
 
 	public void setUserId(String userId){
 		this.userId = userId;
@@ -46,6 +47,10 @@ public class CloudMessaging extends Script {
 	public void setBody(String body){
 		this.body = body;
 	}
+  
+    public String getResult(){
+        return result;
+    }
 
 	@Override
 	public void execute(Map<String, Object> parameters) throws BusinessException {
@@ -70,8 +75,8 @@ public class CloudMessaging extends Script {
 		+"\"body\": \""+body+"\"\n"
 		+"}";
 		Response response = CredentialHelperService.setCredential(target.request(), credential).post(Entity.json(reqBody));
-		String value = response.readEntity(String.class);
-		log.info("response  :" + value);
+		result = response.readEntity(String.class);
+		log.info("response  :" + result);
 	}
 
 }
