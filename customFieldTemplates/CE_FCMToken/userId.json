@@ -23,5 +23,5 @@
   "audited" : false,
   "persisted" : true,
   "filter" : true,
-  "unique" : false
+  "unique" : true
 }
