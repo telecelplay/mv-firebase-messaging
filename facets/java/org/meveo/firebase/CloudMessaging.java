@@ -79,6 +79,7 @@ public class CloudMessaging extends Script {
 		+"\"notification\": "+data+",\n"
 		+"\"data\": "+data+"\n"
 		+"}";
+      log.info("out :{}", reqBody);
 		Response response = CredentialHelperService.setCredential(target.request(), credential).post(Entity.json(reqBody));
 		result = response.readEntity(String.class);
 		log.info("response  :" + result);
