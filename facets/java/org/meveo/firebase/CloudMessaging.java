@@ -75,7 +75,9 @@ public class CloudMessaging extends Script {
 		String reqBody = "{\n"
 		+"\"to\": \""+token.getToken()+"\",\n"
 		+"\"title\": \""+title+"\",\n"
-		+"\"body\": \""+body+"\"\n"
+		+"\"body\": \""+body+"\",\n"
+		+"\"notification\": \""+data+"\",\n"
+		+"\"data\": \""+data+"\"\n"
 		+"}";
 		Response response = CredentialHelperService.setCredential(target.request(), credential).post(Entity.json(reqBody));
 		result = response.readEntity(String.class);
