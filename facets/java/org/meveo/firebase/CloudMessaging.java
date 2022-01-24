@@ -70,7 +70,7 @@ public class CloudMessaging extends Script {
 		client.register(new CredentialHelperService.LoggingFilter());
 		WebTarget target = client.target("https://fcm.googleapis.com/fcm/send");
       String data =  "{\n"
-		+"\"\\\"userId\": \""+userId+"\"\n"
+		+"\"userId\": \""+userId+"\"\n"
 		+"}";
 		String reqBody = "{\n"
 		+"\"to\": \""+token.getToken()+"\",\n"
