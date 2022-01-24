@@ -69,6 +69,10 @@ public class CloudMessaging extends Script {
 		Client client = ClientBuilder.newClient();
 		client.register(new CredentialHelperService.LoggingFilter());
 		WebTarget target = client.target("https://fcm.googleapis.com/fcm/send");
+      String notification = "{\n"
+		+"\"title\": \""+title+"\",\n"
+		+"\"body\": \""+body+"\",\n"
+		+"}";
       String data =  "{"
 		+"\"userId\": \""+userId+"\""
 		+"}";
@@ -76,7 +80,7 @@ public class CloudMessaging extends Script {
 		+"\"to\": \""+token.getToken()+"\",\n"
 		+"\"title\": \""+title+"\",\n"
 		+"\"body\": \""+body+"\",\n"
-		+"\"notification\": "+data+",\n"
+		+"\"notification\": "+notification+",\n"
 		+"\"data\": "+data+"\n"
 		+"}";
       log.info("out :{}", reqBody);
