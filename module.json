@@ -4,6 +4,10 @@
   "license" : "GPL",
   "currentVersion" : "0.1",
   "isInDraft" : true,
-  "moduleDependencies" : [ ],
+  "moduleDependencies" : [{
+    "code" : "credential",
+    "description" : "credentials",
+    "currentVersion" : "1.2.5"
+  }  ],
   "moduleFiles" : [ ]
 }
