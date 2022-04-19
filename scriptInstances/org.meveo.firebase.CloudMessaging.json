@@ -22,18 +22,5 @@
   "executionRoles" : [ ],
   "sourcingRoles" : [ ],
   "mavenDependencies" : [ ],
-  "importScriptInstances" : [ {
-    "code" : "org.meveo.credentials.CredentialHelperService",
-    "description" : "Helper function to build request with credentials",
-    "inputs" : [ ],
-    "outputs" : [ ],
-    "generateOutputs" : false,
-    "type" : "JAVA",
-    "transactionType" : "SAME",
-    "script" : "package org.meveo.credentials;\r\n\r\nimport java.util.Map;\r\n\r\nimport org.meveo.service.script.Script;\r\nimport org.meveo.admin.exception.BusinessException;\r\nimport javax.ws.rs.client.*;\r\n\r\nimport java.io.IOException;\r\nimport java.util.List;\r\nimport org.meveo.model.customEntities.Credential;\r\nimport org.meveo.model.storage.Repository;\r\nimport org.meveo.api.persistence.CrossStorageApi;\r\nimport org.meveo.elresolver.ValueExpressionWrapper;\r\nimport org.slf4j.Logger;\r\nimport org.slf4j.LoggerFactory;\r\nimport javax.xml.bind.DatatypeConverter;\r\n\r\n\r\npublic class CredentialHelperService extends Script {\r\n  \r\n  private static final Logger log = LoggerFactory.getLogger(CredentialHelperService.class);\r\n\r\n    public static class LoggingFilter implements ClientRequestFilter {\r\n        @Override\r\n        public void filter(ClientRequestContext requestContext) throws IOException {\r\n            if(requestContext!=null){\r\n              if(requestContext.getEntity()!=null){\r\n                log.info(requestContext.getEntity().toString());\r\n              } else {\r\n                log.info(\"uri:{}\",requestContext.getUri());\r\n              }\r\n            }\r\n        }\r\n    }\r\n\r\n    public static Credential getCredential(String domain,CrossStorageApi crossStorageApiInstance,Repository repo){\r\n      List<Credential> matchigCredentials = crossStorageApiInstance.find(repo, Credential.class)\r\n                .by(\"domainName\", domain)\r\n\t\t\t\t.getResults();\r\n      if(matchigCredentials.size()>0){\r\n        return matchigCredentials.get(0);\r\n      } else {\r\n        return null;\r\n      }\r\n    }\r\n  \r\n    public static Invocation.Builder setCredential(Invocation.Builder invocBuilder,Credential credential) throws BusinessException {\r\n      Invocation.Builder result=invocBuilder;\r\n      if(\"BASIC_HTTP\".equals(credential.getAuthenticationType())){\r\n        try{\r\n          String token = credential.getUsername() + \":\" + credential.getPassword();\r\n          String headerValue = \"BASIC \" + DatatypeConverter.printBase64Binary(token.getBytes(\"UTF-8\"));\r\n          result=invocBuilder.header(\"Authorization\", headerValue);} \r\n        catch (Exception ex) {\r\n            throw new BusinessException(\"Cannot encode with UTF-8\", ex);\r\n        }\r\n      } else if(\"HEADER\".equals(credential.getAuthenticationType())){\r\n        String headerKey = credential.getHeaderKey();\r\n        String headerValue = credential.getHeaderValue();\r\n        try{\r\n          if(headerKey.contains(\"#{\")){\r\n            headerKey=ValueExpressionWrapper.evaluateToStringMultiVariable(headerKey,\"entity\",credential);\r\n          }\r\n          if(headerValue.contains(\"#{\")){\r\n            headerValue=ValueExpressionWrapper.evaluateToStringMultiVariable(headerValue,\"entity\",credential);\r\n          }\r\n          result=invocBuilder.header(headerKey, headerValue);\r\n        } catch(Exception e) {\r\n          throw new BusinessException(e);\r\n        }\r\n      }\r\n      return result;\r\n    }\r\n  \r\n\t@Override\r\n\tpublic void execute(Map<String, Object> parameters) throws BusinessException {\r\n    }\r\n\t\r\n}",
-    "executionRoles" : [ ],
-    "sourcingRoles" : [ ],
-    "mavenDependencies" : [ ],
-    "importScriptInstances" : [ ]
-  } ]
+  "importScriptInstances" : ["org.meveo.credentials.CredentialHelperService"]
 }
