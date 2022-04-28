@@ -5,7 +5,7 @@
   "currentVersion" : "0.1",
   "isInDraft" : true,
   "moduleDependencies" : [{
-    "code" : "credential",
+    "code" : "mv-credentials",
     "description" : "credentials",
     "currentVersion" : "1.2.5"
   }  ],
