@@ -4,5 +4,16 @@
     "$schema": "http://json-schema.org/draft-07/schema",
     "id": "FCMToken",
     "title": "FCM Token",
-    "type": "object"
+    "type": "object",
+    "properties": {"token": {
+        "storages": ["SQL"],
+        "nullable": true,
+        "description": "token",
+        "readOnly": false,
+        "versionable": false,
+        "id": "CE_FCMToken_token",
+        "title": "FCMToken.token",
+        "type": "string",
+        "maxLength": 500
+    }}
 }
