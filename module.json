@@ -1,13 +1,15 @@
 {
-  "code" : "firebase-messaging",
+  "code" : "mv-firebase-messaging",
   "description" : "app/web notification using firebase messaging",
   "license" : "GPL",
   "currentVersion" : "0.1",
   "isInDraft" : true,
-  "moduleDependencies" : [{
+  "moduleDependencies" : [ {
     "code" : "mv-credentials",
     "description" : "credentials",
-    "currentVersion" : "1.2.5"
-  }  ],
+    "currentVersion" : "1.2.5",
+    "gitUrl" : "https://github.com/telecelplay/credentials.git",
+    "gitBranch" : "main"
+  } ],
   "moduleFiles" : [ ]
 }
