@@ -4,12 +4,13 @@
   "license" : "GPL",
   "currentVersion" : "0.1",
   "isInDraft" : true,
+  "autoCommit" : true,
   "moduleDependencies" : [ {
     "code" : "mv-credentials",
     "description" : "credentials",
     "currentVersion" : "1.2.5",
-    "gitUrl" : "https://github.com/telecelplay/credentials.git",
-    "gitBranch" : "main"
+    "gitUrl" : "https://github.com/telecelplay/mv-credentials.git",
+    "gitBranch" : "master"
   } ],
   "moduleFiles" : [ ]
 }
