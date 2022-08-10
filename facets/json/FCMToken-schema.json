@@ -5,15 +5,29 @@
     "id": "FCMToken",
     "title": "FCM Token",
     "type": "object",
-    "properties": {"token": {
-        "storages": ["SQL"],
-        "nullable": true,
-        "description": "token",
-        "readOnly": false,
-        "versionable": false,
-        "id": "CE_FCMToken_token",
-        "title": "FCMToken.token",
-        "type": "string",
-        "maxLength": 500
-    }}
+    "properties": {
+        "userId": {
+            "storages": ["SQL"],
+            "indexType": "INDEX_NOT_ANALYZE",
+            "nullable": true,
+            "description": "User Id",
+            "readOnly": false,
+            "versionable": false,
+            "id": "CE_FCMToken_userId",
+            "title": "FCMToken.userId",
+            "type": "string",
+            "maxLength": 50
+        },
+        "token": {
+            "storages": ["SQL"],
+            "nullable": true,
+            "description": "token",
+            "readOnly": false,
+            "versionable": false,
+            "id": "CE_FCMToken_token",
+            "title": "FCMToken.token",
+            "type": "string",
+            "maxLength": 500
+        }
+    }
 }
