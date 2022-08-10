@@ -19,10 +19,6 @@ public class FCMToken implements CustomEntity {
     @JsonIgnore()
     private DBStorageType storages;
 
-    private String userId;
-
-    private String token;
-
     @Override()
     public String getUuid() {
         return uuid;
@@ -38,22 +34,6 @@ public class FCMToken implements CustomEntity {
 
     public void setStorages(DBStorageType storages) {
         this.storages = storages;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     @Override()
