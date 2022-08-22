@@ -6,6 +6,17 @@
     "title": "Notification",
     "type": "object",
     "properties": {
+        "sendDate": {
+            "storages": ["SQL"],
+            "nullable": true,
+            "format": "date-time",
+            "description": "Send date",
+            "readOnly": false,
+            "versionable": false,
+            "id": "CE_Notification_sendDate",
+            "title": "Notification.sendDate",
+            "type": "string"
+        },
         "recipient": {
             "storages": ["SQL"],
             "nullable": true,
