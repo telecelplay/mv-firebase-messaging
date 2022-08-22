@@ -41,6 +41,16 @@
                 "FAIL"
             ]
         },
+        "notificationContents": {
+            "storages": ["SQL"],
+            "nullable": true,
+            "description": "Content",
+            "readOnly": false,
+            "versionable": false,
+            "id": "CE_Notification_notificationContents",
+            "title": "Notification.notificationContents",
+            "type": "string"
+        },
         "title": {
             "storages": ["SQL"],
             "nullable": true,
