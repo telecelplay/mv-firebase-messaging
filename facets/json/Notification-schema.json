@@ -4,5 +4,16 @@
     "$schema": "http://json-schema.org/draft-07/schema",
     "id": "Notification",
     "title": "Notification",
-    "type": "object"
+    "type": "object",
+    "properties": {"recipient": {
+        "storages": ["SQL"],
+        "nullable": true,
+        "description": "Recipient",
+        "readOnly": false,
+        "versionable": false,
+        "id": "CE_Notification_recipient",
+        "title": "Notification.recipient",
+        "type": "string",
+        "maxLength": 255
+    }}
 }
