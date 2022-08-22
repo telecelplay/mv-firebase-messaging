@@ -21,6 +21,8 @@ public class Notification implements CustomEntity {
 
     private String recipient;
 
+    private String title;
+
     @Override()
     public String getUuid() {
         return uuid;
@@ -44,6 +46,14 @@ public class Notification implements CustomEntity {
 
     public void setRecipient(String recipient) {
         this.recipient = recipient;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override()
