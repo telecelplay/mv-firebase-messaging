@@ -5,15 +5,28 @@
     "id": "Notification",
     "title": "Notification",
     "type": "object",
-    "properties": {"recipient": {
-        "storages": ["SQL"],
-        "nullable": true,
-        "description": "Recipient",
-        "readOnly": false,
-        "versionable": false,
-        "id": "CE_Notification_recipient",
-        "title": "Notification.recipient",
-        "type": "string",
-        "maxLength": 255
-    }}
+    "properties": {
+        "recipient": {
+            "storages": ["SQL"],
+            "nullable": true,
+            "description": "Recipient",
+            "readOnly": false,
+            "versionable": false,
+            "id": "CE_Notification_recipient",
+            "title": "Notification.recipient",
+            "type": "string",
+            "maxLength": 255
+        },
+        "title": {
+            "storages": ["SQL"],
+            "nullable": true,
+            "description": "Title",
+            "readOnly": false,
+            "versionable": false,
+            "id": "CE_Notification_title",
+            "title": "Notification.title",
+            "type": "string",
+            "maxLength": 255
+        }
+    }
 }
