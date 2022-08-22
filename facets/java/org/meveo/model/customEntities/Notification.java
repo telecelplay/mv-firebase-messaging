@@ -19,6 +19,8 @@ public class Notification implements CustomEntity {
     @JsonIgnore()
     private DBStorageType storages;
 
+    private String recipient;
+
     @Override()
     public String getUuid() {
         return uuid;
@@ -34,6 +36,14 @@ public class Notification implements CustomEntity {
 
     public void setStorages(DBStorageType storages) {
         this.storages = storages;
+    }
+
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
     }
 
     @Override()
