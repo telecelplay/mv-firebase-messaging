@@ -1,39 +1,53 @@
-const deleteNotification = async (parameters) =>  {
-	const baseUrl = window.location.origin;
-	const url = new URL(`${window.location.pathname.split('/')[1]}/rest/deleteNotification/${parameters.notificationId}`, baseUrl);
-	return fetch(url.toString(), {
-		method: 'POST', 
-		headers : new Headers({
- 			'Content-Type': 'application/json'
-		}),
-		body: JSON.stringify({
-			
-		})
-	});
+import EndpointInterface from "#{API_BASE_URL}/api/rest/endpoint/EndpointInterface.js";
+
+// the request schema, this should be updated
+// whenever changes to the endpoint parameters are made
+// this is important because this is used to validate and parse the request parameters
+const requestSchema = {
+  "title" : "deleteNotificationRequest",
+  "id" : "deleteNotificationRequest",
+  "default" : "Schema definition for deleteNotification",
+  "$schema" : "http://json-schema.org/draft-07/schema",
+  "type" : "object"
 }
 
-const deleteNotificationForm = (container) => {
-	const html = `<form id='deleteNotification-form'>
-		<div id='deleteNotification-notificationId-form-field'>
-			<label for='notificationId'>notificationId</label>
-			<input type='text' id='deleteNotification-notificationId-param' name='notificationId'/>
-		</div>
-		<button type='button'>Test</button>
-	</form>`;
-
-	container.insertAdjacentHTML('beforeend', html)
-
-	const notificationId = container.querySelector('#deleteNotification-notificationId-param');
-
-	container.querySelector('#deleteNotification-form button').onclick = () => {
-		const params = {
-			notificationId : notificationId.value !== "" ? notificationId.value : undefined
-		};
-
-		deleteNotification(params).then(r => r.text().then(
-				t => alert(t)
-			));
-	};
+// the response schema, this should be updated
+// whenever changes to the endpoint parameters are made
+// this is important because this could be used to parse the result
+const responseSchema = {
+  "title" : "deleteNotificationResponse",
+  "id" : "deleteNotificationResponse",
+  "default" : "Schema definition for deleteNotification",
+  "$schema" : "http://json-schema.org/draft-07/schema",
+  "type" : "object",
+  "properties" : {
+    "result" : {
+      "title" : "result",
+      "type" : "string",
+      "minLength" : 1
+    }
+  }
 }
 
-export { deleteNotification, deleteNotificationForm };
+// should contain offline mock data, make sure it adheres to the response schema
+const mockResult = {};
+
+class deleteNotification extends EndpointInterface {
+	constructor() {
+		// name and http method, these are inserted when code is generated
+		super("deleteNotification", "POST");
+		this.requestSchema = requestSchema;
+		this.responseSchema = responseSchema;
+		this.mockResult = mockResult;
+	}
+
+	getRequestSchema() {
+		return this.requestSchema;
+	}
+
+	getResponseSchema() {
+		return this.responseSchema;
+	}
+}
+
+export default new deleteNotification();
