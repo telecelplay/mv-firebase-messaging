@@ -22,6 +22,8 @@ public class Notification implements CustomEntity {
 
     private Instant sendDate;
 
+    private String title;
+
     @Override()
     public String getUuid() {
         return uuid;
@@ -45,6 +47,14 @@ public class Notification implements CustomEntity {
 
     public void setSendDate(Instant sendDate) {
         this.sendDate = sendDate;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override()
