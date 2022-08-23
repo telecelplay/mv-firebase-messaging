@@ -5,15 +5,28 @@
     "id": "Notification",
     "title": "Notification",
     "type": "object",
-    "properties": {"sendDate": {
-        "storages": ["SQL"],
-        "nullable": true,
-        "format": "date-time",
-        "description": "Send date",
-        "readOnly": false,
-        "versionable": false,
-        "id": "CE_Notification_sendDate",
-        "title": "Notification.sendDate",
-        "type": "string"
-    }}
+    "properties": {
+        "sendDate": {
+            "storages": ["SQL"],
+            "nullable": true,
+            "format": "date-time",
+            "description": "Send date",
+            "readOnly": false,
+            "versionable": false,
+            "id": "CE_Notification_sendDate",
+            "title": "Notification.sendDate",
+            "type": "string"
+        },
+        "title": {
+            "storages": ["SQL"],
+            "nullable": true,
+            "description": "Title",
+            "readOnly": false,
+            "versionable": false,
+            "id": "CE_Notification_title",
+            "title": "Notification.title",
+            "type": "string",
+            "maxLength": 255
+        }
+    }
 }
