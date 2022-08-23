@@ -1,0 +1,12 @@
+{
+  "code" : "Notification",
+  "name" : "Notification",
+  "description" : "Notification details",
+  "customEntityCategoryCode" : "messaging",
+  "availableStorages" : [ "SQL" ],
+  "sqlStorageConfiguration" : {
+    "storeAsTable" : true
+  },
+  "samples" : [ ],
+  "audited" : false
+}
