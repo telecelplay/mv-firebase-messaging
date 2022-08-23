@@ -17,6 +17,17 @@
             "title": "Notification.sendDate",
             "type": "string"
         },
+        "recipient": {
+            "storages": ["SQL"],
+            "nullable": true,
+            "description": "Recipient",
+            "readOnly": false,
+            "versionable": false,
+            "id": "CE_Notification_recipient",
+            "title": "Notification.recipient",
+            "type": "string",
+            "maxLength": 255
+        },
         "notificationContents": {
             "storages": ["SQL"],
             "nullable": true,
