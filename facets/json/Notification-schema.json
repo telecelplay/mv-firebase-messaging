@@ -51,6 +51,17 @@
             "title": "Notification.notificationContents",
             "type": "string"
         },
+        "error": {
+            "storages": ["SQL"],
+            "nullable": true,
+            "description": "Error (if notification failed)",
+            "readOnly": false,
+            "versionable": false,
+            "id": "CE_Notification_error",
+            "title": "Notification.error",
+            "type": "string",
+            "maxLength": 255
+        },
         "title": {
             "storages": ["SQL"],
             "nullable": true,
