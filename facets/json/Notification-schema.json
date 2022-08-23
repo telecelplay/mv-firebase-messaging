@@ -28,6 +28,19 @@
             "type": "string",
             "maxLength": 255
         },
+        "sendStatus": {
+            "storages": ["SQL"],
+            "nullable": true,
+            "description": "Send status",
+            "readOnly": false,
+            "versionable": false,
+            "id": "CE_Notification_sendStatus",
+            "title": "Notification.sendStatus",
+            "enum": [
+                "SUCCESS",
+                "FAIL"
+            ]
+        },
         "notificationContents": {
             "storages": ["SQL"],
             "nullable": true,
