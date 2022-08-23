@@ -28,6 +28,8 @@ public class Notification implements CustomEntity {
 
     private String notificationContents;
 
+    private String error;
+
     private String title;
 
     @Override()
@@ -77,6 +79,14 @@ public class Notification implements CustomEntity {
 
     public void setNotificationContents(String notificationContents) {
         this.notificationContents = notificationContents;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 
     public String getTitle() {
