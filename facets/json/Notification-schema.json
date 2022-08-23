@@ -4,5 +4,16 @@
     "$schema": "http://json-schema.org/draft-07/schema",
     "id": "Notification",
     "title": "Notification",
-    "type": "object"
+    "type": "object",
+    "properties": {"sendDate": {
+        "storages": ["SQL"],
+        "nullable": true,
+        "format": "date-time",
+        "description": "Send date",
+        "readOnly": false,
+        "versionable": false,
+        "id": "CE_Notification_sendDate",
+        "title": "Notification.sendDate",
+        "type": "string"
+    }}
 }
