@@ -22,6 +22,8 @@ public class Notification implements CustomEntity {
 
     private Instant sendDate;
 
+    private String recipient;
+
     private String notificationContents;
 
     private String title;
@@ -49,6 +51,14 @@ public class Notification implements CustomEntity {
 
     public void setSendDate(Instant sendDate) {
         this.sendDate = sendDate;
+    }
+
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
     }
 
     public String getNotificationContents() {
