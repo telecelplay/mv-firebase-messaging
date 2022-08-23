@@ -1,0 +1,19 @@
+{
+  "code" : "org.meveo.firebase.DeleteNotification",
+  "description" : "Delete notification",
+  "inputs" : [ {
+    "name" : "notificationId",
+    "type" : "String"
+  } ],
+  "outputs" : [ {
+    "name" : "result",
+    "type" : "Map<String,Object>"
+  } ],
+  "generateOutputs" : false,
+  "type" : "JAVA",
+  "transactionType" : "SAME",
+  "executionRoles" : [ ],
+  "sourcingRoles" : [ ],
+  "mavenDependencies" : [ ],
+  "importScriptInstances" : [ ]
+}
