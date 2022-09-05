@@ -52,11 +52,27 @@ public class CloudMessaging extends Script {
         return result;
     }
 
+    private void mapErrorResult(String errorMessage) {
+        mapErrorResult(errorMessage, null);
+    }
+
+    private void mapErrorResult(String errorMessage, Exception e) {
+        result.put("status", "fail");
+        if (e != null) {
+            log.error(errorMessage, e);
+            result.put("result", errorMessage + " cause: " + e.getMessage());
+        } else {
+            log.error(errorMessage);
+            result.put("result", errorMessage);
+        }
+    }
+
     @Override
     public void execute(Map<String, Object> parameters) throws BusinessException {
         Credential credential = CredentialHelperService.getCredential(FCM_DOMAIN, crossStorageApi, defaultRepo);
         if (credential == null) {
-            throw new BusinessException("No credential found for " + FCM_DOMAIN);
+            mapErrorResult("No credential found for " + FCM_DOMAIN);
+            return;
         } else {
             log.info("using credential {} with username {}", credential.getUuid(), credential.getUsername());
         }
@@ -65,7 +81,13 @@ public class CloudMessaging extends Script {
         try {
             token = crossStorageApi.find(defaultRepo, FCMToken.class).by("userId", userId).getResult();
         } catch (Exception e) {
-            throw new BusinessException("TOKEN_NOT_FOUND");
+            mapErrorResult("Failed to retrieve FCM token for user id: " + userId, e);
+            return;
+        }
+
+        if (token == null) {
+            mapErrorResult("FCM token for recipient: " + userId + " does not exist.");
+            return;
         }
 
         Client client = ClientBuilder.newClient();
@@ -96,11 +118,8 @@ public class CloudMessaging extends Script {
             result.put("status", "success");
             result.put("result", response.readEntity(String.class));
         } catch (Exception e) {
-            String errorMessage = "Failed to send notification, reason: " + e.getMessage();
-            result.put("status", "fail");
-            result.put("result", errorMessage);
-            error = errorMessage;
-            log.error(errorMessage, e);
+            mapErrorResult("Failed to send notification to recipient: " + userId, e);
+            error = "Failed to send notification to recipient: " + userId + ", cause: " + e.getMessage();
         }
 
         try {
@@ -113,10 +132,7 @@ public class CloudMessaging extends Script {
             notificationDetails.setError(error);
             crossStorageApi.createOrUpdate(defaultRepo, notificationDetails);
         } catch (Exception e) {
-            String errorMessage = "Failed to save notification details, reason: " + e.getMessage();
-            result.put("status", "fail");
-            result.put("result", errorMessage);
-            log.error(errorMessage, e);
+            mapErrorResult("Failed to save notification " + requestBody + " for recipient: " + userId, e);
         }
     }
 }
