@@ -34,7 +34,7 @@ public class CloudMessaging extends Script {
     private String userId;
     private String title;
     private String body;
-    private final Map<String, Object> result = new HashMap<>();
+    private Map<String, Object> result;
 
     public void setUserId(String userId) {
         this.userId = userId;
@@ -52,27 +52,33 @@ public class CloudMessaging extends Script {
         return result;
     }
 
-    private void mapErrorResult(String errorMessage) {
-        mapErrorResult(errorMessage, null);
+    private static Map<String, Object> mapErrorResult(String errorMessage) {
+        return mapErrorResult(errorMessage, null);
     }
 
-    private void mapErrorResult(String errorMessage, Exception e) {
-        result.put("status", "fail");
+    private static Map<String, Object> mapErrorResult(String errorMessage, Exception e) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("status", "fail");
         if (e != null) {
             log.error(errorMessage, e);
-            result.put("result", errorMessage + " cause: " + e.getMessage());
+            error.put("result", errorMessage + " cause: " + e.getMessage());
         } else {
             log.error(errorMessage);
-            result.put("result", errorMessage);
+            error.put("result", errorMessage);
         }
+        return error;
     }
 
     @Override
     public void execute(Map<String, Object> parameters) throws BusinessException {
+        result = sendNotification(crossStorageApi, defaultRepo, userId, title, body);
+    }
+
+    public synchronized static Map<String, Object> sendNotification(CrossStorageApi crossStorageApi,
+        Repository defaultRepo, String userId, String title, String body) {
         Credential credential = CredentialHelperService.getCredential(FCM_DOMAIN, crossStorageApi, defaultRepo);
         if (credential == null) {
-            mapErrorResult("No credential found for " + FCM_DOMAIN);
-            return;
+            return mapErrorResult("No credential found for " + FCM_DOMAIN);
         } else {
             log.info("using credential {} with username {}", credential.getUuid(), credential.getUsername());
         }
@@ -81,13 +87,11 @@ public class CloudMessaging extends Script {
         try {
             token = crossStorageApi.find(defaultRepo, FCMToken.class).by("userId", userId).getResult();
         } catch (Exception e) {
-            mapErrorResult("Failed to retrieve FCM token for user id: " + userId, e);
-            return;
+            return mapErrorResult("Failed to retrieve FCM token for user id: " + userId, e);
         }
 
         if (token == null) {
-            mapErrorResult("FCM token for recipient: " + userId + " does not exist.");
-            return;
+            return mapErrorResult("FCM token for recipient: " + userId + " does not exist.");
         }
 
         Client client = ClientBuilder.newClient();
@@ -112,14 +116,18 @@ public class CloudMessaging extends Script {
 
         log.info("notification content :{}", requestBody);
         String error = null;
+        Map<String, Object> details;
         try {
             Response response = CredentialHelperService.setCredential(target.request(), credential)
                                                        .post(Entity.json(requestBody));
-            result.put("status", "success");
-            result.put("result", response.readEntity(String.class));
+            details = new HashMap<>();
+            details.put("status", "success");
+            details.put("result", response.readEntity(String.class));
         } catch (Exception e) {
-            mapErrorResult("Failed to send notification to recipient: " + userId, e);
-            error = "Failed to send notification to recipient: " + userId + ", cause: " + e.getMessage();
+            details = mapErrorResult("Failed to send notification to recipient: " + userId, e);
+            error = "Failed to send notification: " + requestBody
+                + " to recipient: " + userId
+                + ", cause: " + e.getMessage();
         }
 
         try {
@@ -127,12 +135,14 @@ public class CloudMessaging extends Script {
             notificationDetails.setTitle(title);
             notificationDetails.setRecipient(userId);
             notificationDetails.setSendDate(Instant.now());
-            notificationDetails.setSendStatus("" + result.get("status"));
+            notificationDetails.setSendStatus("" + details.get("status"));
             notificationDetails.setNotificationContents(requestBody);
             notificationDetails.setError(error);
             crossStorageApi.createOrUpdate(defaultRepo, notificationDetails);
         } catch (Exception e) {
-            mapErrorResult("Failed to save notification " + requestBody + " for recipient: " + userId, e);
+            return mapErrorResult("Failed to save notification " + requestBody + " for recipient: " + userId, e);
         }
+
+        return details;
     }
 }
