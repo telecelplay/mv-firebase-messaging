@@ -76,6 +76,11 @@ public class CloudMessaging extends Script {
 
     public synchronized static Map<String, Object> sendNotification(CrossStorageApi crossStorageApi,
         Repository defaultRepo, String userId, String title, String body) {
+        return sendNotification(crossStorageApi, defaultRepo, userId, title, body, null);
+    }
+
+    public synchronized static Map<String, Object> sendNotification(CrossStorageApi crossStorageApi,
+        Repository defaultRepo, String userId, String title, String body, Map<String, String> additionalData) {
         Credential credential = CredentialHelperService.getCredential(FCM_DOMAIN, crossStorageApi, defaultRepo);
         if (credential == null) {
             return mapErrorResult("No credential found for " + FCM_DOMAIN);
@@ -104,6 +109,9 @@ public class CloudMessaging extends Script {
 
         Map<String, String> data = new HashMap<>();
         data.put("userId", userId);
+        if (additionalData != null && !additionalData.isEmpty()) {
+            data.putAll(additionalData);
+        }
 
         Map<String, Object> content = new HashMap<>();
         content.put("to", token.getToken());
