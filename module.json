@@ -4,7 +4,6 @@
   "license" : "GPL",
   "currentVersion" : "0.1",
   "isInDraft" : true,
-  "autoCommit" : true,
   "moduleDependencies" : [ {
     "code" : "mv-credentials",
     "description" : "credentials",
