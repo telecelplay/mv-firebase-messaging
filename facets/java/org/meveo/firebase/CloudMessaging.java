@@ -165,6 +165,7 @@ public class CloudMessaging extends Script {
         if (type == null || type.isEmpty()) {
             return "";
         }
+
         Pattern pattern = Pattern.compile(WORD_REGEX);
         Matcher matcher = pattern.matcher(type);
         String text = matcher.replaceAll(SPACE);
