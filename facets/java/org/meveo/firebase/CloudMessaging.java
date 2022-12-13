@@ -1,8 +1,13 @@
 package org.meveo.firebase;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.UnaryOperator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.meveo.model.customEntities.Notification;
 import org.meveo.service.script.Script;
@@ -23,8 +28,10 @@ import org.meveo.api.persistence.CrossStorageApi;
 import org.meveo.credentials.CredentialHelperService;
 
 public class CloudMessaging extends Script {
-
-    private static final Logger log = LoggerFactory.getLogger(CloudMessaging.class);
+    private static final String WORD_REGEX = "(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|_|\\s|-";
+    private static final String SPACE = " ";
+    private static final String UNDERSCORE = "_";
+    private static final Logger LOG = LoggerFactory.getLogger(CloudMessaging.class);
     private final CrossStorageApi crossStorageApi = getCDIBean(CrossStorageApi.class);
     private final RepositoryService repositoryService = getCDIBean(RepositoryService.class);
     private final Repository defaultRepo = repositoryService.findDefaultRepository();
@@ -60,10 +67,10 @@ public class CloudMessaging extends Script {
         Map<String, Object> error = new HashMap<>();
         error.put("status", "fail");
         if (e != null) {
-            log.error(errorMessage, e);
+            LOG.error(errorMessage, e);
             error.put("result", errorMessage + " cause: " + e.getMessage());
         } else {
-            log.error(errorMessage);
+            LOG.error(errorMessage);
             error.put("result", errorMessage);
         }
         return error;
@@ -85,7 +92,7 @@ public class CloudMessaging extends Script {
         if (credential == null) {
             return mapErrorResult("No credential found for " + FCM_DOMAIN);
         } else {
-            log.info("using credential {} with username {}", credential.getUuid(), credential.getUsername());
+            LOG.info("using credential {} with username {}", credential.getUuid(), credential.getUsername());
         }
 
         FCMToken token;
@@ -122,7 +129,7 @@ public class CloudMessaging extends Script {
 
         String requestBody = new Gson().toJson(content);
 
-        log.info("notification content :{}", requestBody);
+        LOG.info("notification content :{}", requestBody);
         String error = null;
         Map<String, Object> details;
         try {
@@ -152,5 +159,18 @@ public class CloudMessaging extends Script {
         }
 
         return details;
+    }
+
+    public static String formatType(String type) {
+        if (type == null || type.isEmpty()) {
+            return "";
+        }
+        Pattern pattern = Pattern.compile(WORD_REGEX);
+        Matcher matcher = pattern.matcher(type);
+        String text = matcher.replaceAll(SPACE);
+        String[] words = text.split(SPACE);
+        return Arrays.stream(words)
+                     .map(word -> word.isEmpty() ? word : word.toUpperCase())
+                     .collect(Collectors.joining(UNDERSCORE));
     }
 }
